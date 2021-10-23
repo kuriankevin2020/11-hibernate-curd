@@ -10,31 +10,29 @@ public class UpdateStudent {
 
 	public static void main(String[] args) {
 
-		Student student = new Student("Kurian", "Kevin", "kuriankevin@gmail.com");
-
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
 				.buildSessionFactory();
 
-		try {
-			Session session = factory.getCurrentSession();
+		Session session = factory.getCurrentSession();
+		
+		try {			
+			
 			session.beginTransaction();
-			session.save(student);
-			session.getTransaction().commit();
-
-			// update1
-			session = factory.getCurrentSession();
-			session.beginTransaction();
-			Student myStudent = session.get(Student.class, student.getId());
+			
+			// update1			
+			int theId = 1;
+			Student myStudent = session.get(Student.class, theId);
 			myStudent.setFirstName("Luffy");
-			session.getTransaction().commit();
 
-			// update2
-			session = factory.getCurrentSession();
-			session.beginTransaction();
+			// update2			
 			session.createQuery("update Student set email='foo@gmail.com'").executeUpdate();
+			
 			session.getTransaction().commit();
 
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		} finally {
+			session.close();
 			factory.close();
 		}
 

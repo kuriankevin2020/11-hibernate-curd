@@ -6,37 +6,32 @@ import org.hibernate.cfg.Configuration;
 
 import com.hibernate.project.entity.Student;
 
-public class ReadStudent {
+public class GetStudent {
 
 	public static void main(String[] args) {
-
-		Student student = new Student("Kurian", "Kevin", "kuriankevin@gmail.com");
 
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
 				.buildSessionFactory();
 
+		Session session = factory.getCurrentSession();
+
 		try {
 
-			Session session = factory.getCurrentSession();
-			session.beginTransaction();
-			session.save(student);
-			session.getTransaction().commit();
+			int theId = 1;
 
-			// find out the students id: primary key
-			System.out.println("Saved student. Generated Id: " + student.getId());
-
-			// get a new session and start transaction
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			// retrieve student based on student id
-			Student myStudent = session.get(Student.class, student.getId());
+			Student myStudent = session.get(Student.class, theId);
 			System.out.println("Student: " + myStudent);
 
-			// commit the transaction
 			session.getTransaction().commit();
 
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		} finally {
+			session.close();
 			factory.close();
 		}
 

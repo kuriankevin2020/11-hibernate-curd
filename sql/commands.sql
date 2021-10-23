@@ -8,9 +8,9 @@ TRUNCATE hb_student_tracker.student;
 ALTER TABLE hb_student_tracker.student AUTO_INCREMENT=10001;
 
 /* delete linked table data */
- SET FOREIGN_KEY_CHECKS = 0;
- TRUNCATE `hb-01-one-to-one-uni`.instructor_detail;
- SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE `hb-01-one-to-one-uni`.instructor_detail;
+SET FOREIGN_KEY_CHECKS = 1;
  
- /* show table structure */
-  DESC `hb-01-one-to-one-uni`.instructor_detail;
+/* show table structure */
+DESC `hb-01-one-to-one-uni`.instructor_detail;

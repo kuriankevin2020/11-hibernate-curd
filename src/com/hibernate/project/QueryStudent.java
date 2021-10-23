@@ -12,26 +12,14 @@ public class QueryStudent {
 
 	public static void main(String[] args) {
 
-		Student student1 = new Student("Kurian", "Kevin", "kuriankevin@gmail.com");
-		Student student2 = new Student("David", "Augustine", "davidaugustine@gmail.com");
-		Student student3 = new Student("Deva", "Gopu", "devagopu@luv2code.com");
-		Student student4 = new Student("Vineeth", "Neelan", "vineethneelan@luv2code.com");
-
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
 				.buildSessionFactory();
 
+		Session session = factory.getCurrentSession();
+
 		try {
 
-			Session session = factory.getCurrentSession();
-			session.beginTransaction();
-			session.save(student1);
-			session.save(student2);
-			session.save(student3);
-			session.save(student4);
-			session.getTransaction().commit();
-
 			// start a transaction
-			session = factory.getCurrentSession();
 			session.beginTransaction();
 
 			// query1
@@ -51,14 +39,17 @@ public class QueryStudent {
 			displayStudents(theStudents);
 
 			// query4
-			theStudents = session.createQuery("from Student s where s.email" + " LIKE '%luv2code.com'").getResultList();
-			System.out.println("\nStudents where email ends with luv2code.com ");
+			theStudents = session.createQuery("from Student s where s.email" + " LIKE '%@gmail.com'").getResultList();
+			System.out.println("\nStudents where email ends with @gmail.com");
 			displayStudents(theStudents);
 
 			// commit transaction
 			session.getTransaction().commit();
 
+		} catch (Exception exc) {
+			exc.printStackTrace();
 		} finally {
+			session.close();
 			factory.close();
 		}
 
