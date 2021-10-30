@@ -10,6 +10,7 @@ import com.hibernate.project.entity.Student;
 
 public class QueryStudent {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Student.class)
